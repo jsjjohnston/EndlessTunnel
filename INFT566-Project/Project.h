@@ -30,16 +30,7 @@ private:
 	GLSLProgram* phongProgram;
 	GLSLProgram* postProgram;
 
-	GLSLProgram* postBoxBlur;
-	GLSLProgram* postDistort;
-	GLSLProgram* postExplosion;
-	GLSLProgram* postImplosion;
-	GLSLProgram* postEdgeDetection;
-	GLSLProgram* postFog;
-	GLSLProgram* postFuzz;
 	GLSLProgram* postSimple;
-	GLSLProgram* postThermal;
-	GLSLProgram* postFade;
 
 	Camera* m_cam;
 

@@ -6,18 +6,8 @@ Project::Project(): m_postIndex(0)
 	m_model = new Model();
 	phongProgram = new GLSLProgram();
 	m_cam = new Camera();
-	
-	postBoxBlur = new GLSLProgram();
-	postDistort = new GLSLProgram();
-	postExplosion = new GLSLProgram();
-	postFog = new GLSLProgram();
-	postFuzz = new GLSLProgram();
-	postSimple = new GLSLProgram();
-	postThermal = new GLSLProgram();
-	postEdgeDetection = new GLSLProgram();
-	postFade = new GLSLProgram();
 
-	postImplosion = new GLSLProgram();
+	postSimple = new GLSLProgram();
 
 	timePressed = 0;
 
@@ -31,17 +21,7 @@ Project::~Project()
 	delete m_cam;
 	delete phongProgram;
 
-	postBoxBlur;
-	postDistort;
-	postExplosion;
-	postFog;
-	postFuzz;
 	postSimple;
-	postThermal;
-	postEdgeDetection;
-	postFade;
-
-	postImplosion = new GLSLProgram();
 }
 
 bool Project::startup()
@@ -61,56 +41,11 @@ bool Project::startup()
 	phongProgram->use();
 	
 	// Compile Post Processing Shaders
-	postBoxBlur->compileShader("post.vert");
-	postBoxBlur->compileShader("postBoxBlur.frag");
-	postBoxBlur->link();
-	postBoxBlur->validate();
-
-	postDistort->compileShader("post.vert");
-	postDistort->compileShader("postDistort.frag");
-	postDistort->link();
-	postDistort->validate();
-
-	postExplosion->compileShader("post.vert");
-	postExplosion->compileShader("postExplosion.frag");
-	postExplosion->link();
-	postExplosion->validate();	
-
-	postImplosion->compileShader("post.vert");
-	postImplosion->compileShader("postImplosion.frag");
-	postImplosion->link();
-	postImplosion->validate();
-
-	postFog->compileShader("post.vert");
-	postFog->compileShader("postFog.frag");
-	postFog->link();
-	postFog->validate();
-
-	postFuzz->compileShader("post.vert");
-	postFuzz->compileShader("postFuzz.frag");
-	postFuzz->link();
-	postFuzz->validate();
-
 	postSimple->compileShader("post.vert");
 	postSimple->compileShader("postSimple.frag");
 	postSimple->link();
 	postSimple->validate();
-
-	postEdgeDetection->compileShader("post.vert");
-	postEdgeDetection->compileShader("postEdgeDetection.frag");
-	postEdgeDetection->link();
-	postEdgeDetection->validate();
-
-	postThermal->compileShader("post.vert");
-	postThermal->compileShader("postThermal.frag");
-	postThermal->link();
-	postThermal->validate();
-
-	postFade->compileShader("post.vert");
-	postFade->compileShader("postFade.frag");
-	postFade->link();
-	postFade->validate();
-
+	
 	postProgram = postSimple;
 
 	// Set up cam
@@ -146,12 +81,14 @@ void Project::update(float deltaTime)
 	phongProgram->setUniform("lightPositionWorld", glm::vec3(0,6,-5)); // Light Direction
 	phongProgram->setUniform("ambientLight", glm::vec4(0.05f, 0.05f, 0.05f, 1.0f));
 
+	postProgram->setUniform("time",deltaTime);
+
 	//if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && timePressed <= glfwGetTime())
 	if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && timePressed <= glfwGetTime() && demoMode == false)
 	{
 		m_postIndex++;
 
-		if (m_postIndex >= 10)
+		if (m_postIndex >= 0)
 		{
 			m_postIndex = 0;
 		}
@@ -162,120 +99,13 @@ void Project::update(float deltaTime)
 			postProgram = postSimple;
 			timePressed = glfwGetTime() + 1.0;
 			break;
-		case 1:
-			postProgram = postBoxBlur;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 2:
-			postProgram = postDistort;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 3:
-			postProgram = postExplosion;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 4:
-			postProgram = postImplosion;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 5:
-			postProgram = postFog;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 6:
-			postProgram = postFuzz;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 7:
-			postProgram = postThermal;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 8:
-			postProgram = postEdgeDetection;
-			timePressed = glfwGetTime() + 1.0;
-			break;
-		case 9:
-			postProgram = postFade;
-			timePressed = glfwGetTime() + 1.0;
-			break;
+
 		default:
 			break;
 		}
 	}
-
-
-	// Demo Mode
-	if (glfwGetKey(m_window, GLFW_KEY_N) == GLFW_PRESS && timePressed <= glfwGetTime())
-	{
-		std::cout << "Demo Mode" << std::endl;
-		demoMode = true;
-	}
-
-	if (glfwGetKey(m_window, GLFW_KEY_C) == GLFW_PRESS)
-		system("CLS");
-	
-	
-	if (demoMode == true)
-	{
-		if (timePressed <= glfwGetTime())
-		{
-			m_postIndex++;
-			timePressed = glfwGetTime() + 5.0;
-
-			if (m_postIndex >= 10)
-				m_postIndex = 0;
-
-			switch (m_postIndex)
-			{
-			case 0:
-				postProgram = postSimple;
-				std::cout << "Shader: "<< "None" << std::endl;
-				break;
-			case 1:
-				postProgram = postBoxBlur;
-				std::cout << "Shader: " << "Box Blur" << std::endl;
-				break;
-			case 2:
-				postProgram = postDistort;
-				std::cout << "Shader: " << "Distortion" << std::endl;
-				break;
-			case 3:
-				postProgram = postExplosion;
-				std::cout << "Shader: " << "Explosion" << std::endl;
-				break;
-			case 4:
-				postProgram = postImplosion;
-				std::cout << "Shader: " << "Implosion" << std::endl;
-				break;
-			case 5:
-				postProgram = postFog;
-				std::cout << "Shader: " << "Fog" << std::endl;
-				break;
-			case 6:
-				postProgram = postFuzz;
-				std::cout << "Shader: " << "Fuzz" << std::endl;
-				break;
-			case 7:
-				postProgram = postThermal;
-				std::cout << "Shader: " << "Thermal" << std::endl;
-				break;
-			case 8:
-				postProgram = postEdgeDetection;
-				std::cout << "Shader: " << "Edge Detection" << std::endl;
-				break;
-			case 9:
-				postProgram = postFade;
-				std::cout << "Shader: " << "Fade" << std::endl;
-				break;
-			default:
-				break;
-			}
-		}
-
-	}
-
-	if (demoMode != true)
-		m_cam->update(deltaTime);
+		
+	m_cam->update(deltaTime);
 
 	m_model->update(deltaTime);
 }
@@ -290,7 +120,7 @@ void Project::draw()
 	clearScreen();
 	
 	//phongProgram->use();
-	m_model->draw();
+	//m_model->draw();
 		
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, getWindowWidth(), getWindowHeight());

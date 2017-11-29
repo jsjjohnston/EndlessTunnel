@@ -213,7 +213,6 @@
     <ClCompile Include="..\include\GLM\gl_core_4_4.c" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="EndlessTunnel.cpp" />
     <ClCompile Include="GameOBJ.cpp" />
     <ClCompile Include="Glslprogram.cpp" />
     <ClCompile Include="main.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="EndlessTunnel.h" />
     <ClInclude Include="GameOBJ.h" />
     <ClInclude Include="Glslprogram.h" />
     <ClInclude Include="Model.h" />
