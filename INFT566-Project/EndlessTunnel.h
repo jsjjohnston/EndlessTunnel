@@ -6,8 +6,8 @@
 #include "Glslprogram.h"
 #include "Camera.h"
 
-
-class EndlessTunnel : public Application
+class EndlessTunnel :
+	public Application
 {
 public:
 	EndlessTunnel();
@@ -19,7 +19,8 @@ public:
 	virtual void draw();
 
 private:
-	GLSLProgram* endless;
-	Camera* m_cam;
+	GLSLProgram* m_endlessProgram;
+
+	Camera* m_camera;
 };
 
