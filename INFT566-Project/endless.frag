@@ -40,7 +40,8 @@ void main()
     float timeSpeedX = time * 0.3;
     float timeSpeedY = time * 0.2;
 
-    vec2 p = uv + vec2( -0.50+cos(timeSpeedX)*0.2, -0.5-sin(timeSpeedY)*0.3 );
+    //vec2 p = uv + vec2( -0.50+cos(timeSpeedX)*0.2, -0.5-sin(timeSpeedY)*0.3 );
+    vec2 p = uv + vec2(-0.5, -0.5);
 
     vec3 finalColor = tunnel(p);
 
