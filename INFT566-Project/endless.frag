@@ -4,13 +4,38 @@ out vec4 FragColor;
 uniform float time;
 uniform vec2 resolution;
 
+vec3 checkerBoard( vec2 uv, vec2 pp )
+{
+    vec2 p = floor( uv * 4.6 );
+    float t = mod( p.x + p.y, 2.2);
+    vec3 c = vec3(t+pp.x, t+pp.y, t+(pp.x*pp.y));
+
+    return c;
+}
+
+vec3 tunnel( vec2 p, float scrollSpeed, float rotateSpeed )
+{    
+    float a = 2.0 * atan( p.x, p.y  );
+    float po = 2.0;
+    float px = pow( p.x*p.x, po );
+    float py = pow( p.y*p.y, po );
+    float r = pow( px + py, 1.0/(2.0*po) );    
+    vec2 uvp = vec2( 1.0/r + (time*scrollSpeed), a + (time*rotateSpeed));	
+    vec3 finalColor = checkerBoard( uvp, p ).xyz;
+    finalColor *= r;
+
+    return finalColor;
+}
+
 void main()
 {
-    vec2 position = ( gl_FragCoord.xy / resolution.xy );
-    float colour = 0.0f;
-    colour += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
-	colour += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
-	colour += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
-	colour *= sin( time / 10.0 ) * 0.5;
-    FragColor = vec4( vec3( colour, colour * 0.5, sin( colour + time / 3.0 ) * 0.75 ), 1.0 );
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    float timeSpeedX = time * 0.3;
+    float timeSpeedY = time * 0.2;
+
+    vec2 p = uv + vec2( -0.50+cos(timeSpeedX)*0.2, -0.5-sin(timeSpeedY)*0.3 );
+
+    vec3 finalColor = tunnel( p , 1.0, 0.0);
+
+    FragColor = vec4( finalColor, 1.0 );
 } 
