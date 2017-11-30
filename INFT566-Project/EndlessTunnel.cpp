@@ -21,7 +21,7 @@ struct shader_file_extension extensions[] =
 	{ ".cs", GLSLShaderType::COMPUTE }
 };
 
-EndlessTunnel::EndlessTunnel(): handle(0)
+EndlessTunnel::EndlessTunnel(): handle(0), modifier(2.0f), checkerBoardSize(4.6), scrollSpeed(1.0)
 {
 
 }
@@ -108,19 +108,15 @@ void EndlessTunnel::shutdown()
 
 void EndlessTunnel::update(float deltaTime)
 {
-	// Pass in time as green uniform
-	//float timeValue = glfwGetTime();
-	//float greenValue = sin(timeValue) / 2.0f + 0.5f;
-	//int vertexColorLocation = glGetUniformLocation(handle, "ourColor");
-	//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+	updateTimeUniform();
 
-	// Pass in Time
-	int fragTimeLocation = glGetUniformLocation(handle, "time");
-	glUniform1f(fragTimeLocation, glfwGetTime());
+	updateResolutionUniform();
 
-	// Pass in resolution
-	int fragResolutionLocation = glGetUniformLocation(handle, "resolution");
-	glUniform2f(fragResolutionLocation, getWindowWidth(), getWindowHeight());
+	updateCheckerBoardUniform(deltaTime);
+
+	updateModifierUniform(deltaTime);
+
+	updateScrollSpeedUniform(deltaTime);
 }
 
 void EndlessTunnel::draw()
@@ -356,4 +352,79 @@ void EndlessTunnel::use()
 {
 	glUseProgram(handle);
 	std::cout << "Using Handle: " << handle << std::endl;
+}
+
+void EndlessTunnel::updateTimeUniform()
+{
+	// Pass in Time
+	int fragTimeLocation = glGetUniformLocation(handle, "time");
+	glUniform1f(fragTimeLocation, glfwGetTime());
+}
+
+void EndlessTunnel::updateResolutionUniform()
+{
+	// Pass in resolution
+	int fragResolutionLocation = glGetUniformLocation(handle, "resolution");
+	glUniform2f(fragResolutionLocation, getWindowWidth(), getWindowHeight());
+}
+
+void EndlessTunnel::updateCheckerBoardUniform(float deltaTime)
+{
+	// checkerBoardSize
+	if (glfwGetKey(m_window, GLFW_KEY_C) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		checkerBoardSize += 1.0f * deltaTime;
+		std::cout << "Checkbox Size Value: " << checkerBoardSize << std::endl;
+	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_C) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		checkerBoardSize -= 1.0f * deltaTime;
+		std::cout << "Checkbox Size Value: " << checkerBoardSize << std::endl;
+	}
+
+	// Pass in checkerBoardSize
+	int fragCheckboxSizeLocation = glGetUniformLocation(handle, "checkboxSize");
+	glUniform1f(fragCheckboxSizeLocation, checkerBoardSize);
+}
+
+void EndlessTunnel::updateModifierUniform(float deltaTime)
+{
+	// modifier
+	if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		modifier += 1.0f * deltaTime;
+		std::cout << "Modifier Size Value: " << modifier << std::endl;
+	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_M) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		modifier -= 1.0f * deltaTime;
+		std::cout << "Modifier Size Value: " << modifier << std::endl;
+	}
+
+	// Pass in modifier
+	int fragModifierLocation = glGetUniformLocation(handle, "modifier");
+	glUniform1f(fragModifierLocation, modifier);
+}
+
+void EndlessTunnel::updateScrollSpeedUniform(float deltaTime)
+{
+	// scrollSpeed
+	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		scrollSpeed += 1.0f * deltaTime;
+		std::cout << "Scroll Speed Value: " << scrollSpeed << std::endl;
+	}
+
+	// scrollSpeed
+	if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		scrollSpeed -= 1.0f * deltaTime;
+		std::cout << "Scroll Speed Value: " << scrollSpeed << std::endl;
+	}
+
+	// Pass in modifier
+	int fragScrollSpeedLocation = glGetUniformLocation(handle, "scrollSpeed");
+	glUniform1f(fragScrollSpeedLocation, scrollSpeed);
 }

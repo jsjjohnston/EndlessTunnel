@@ -34,6 +34,14 @@ public:
 	void validate();
 	void use();
 
+	// Uniform functions
+	void updateTimeUniform();
+	void updateResolutionUniform();
+	void updateCheckerBoardUniform(float deltaTime);
+	void updateModifierUniform(float deltaTime);
+	void updateScrollSpeedUniform(float deltaTime);
+
+
 	virtual bool startup();
 	virtual void shutdown();
 	virtual void update(float deltaTime);
@@ -42,6 +50,8 @@ public:
 private:
 	unsigned int VBO, VAO, EBO;
 	
+	float modifier, checkerBoardSize, scrollSpeed;
+
 	int handle;
 	std::string getExtension(const char* name);
 
