@@ -29,6 +29,62 @@ EndlessTunnel::EndlessTunnel(): handle(0)
 
 EndlessTunnel::~EndlessTunnel()
 {
+	if (handle == 0) return;
+
+	// Query the number of attached shaders
+	int numShaders = 0;
+	glGetProgramiv(handle, GL_ATTACHED_SHADERS, &numShaders);
+
+	// Get the shader names
+	GLuint * shaderNames = new GLuint[numShaders];
+	glGetAttachedShaders(handle, numShaders, NULL, shaderNames);
+
+	// Delete the shaders
+	for (int i = 0; i < numShaders; i++)
+		glDeleteShader(shaderNames[i]);
+
+	// Delete the program
+	glDeleteProgram(handle);
+
+	delete[] shaderNames;
+}
+
+bool EndlessTunnel::startup()
+{
+	// Setup Time Manager singleton
+	TimeManager::create();
+
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f,  0.5f, 0.0f
+	};
+
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	compileShader("endless.vert");
+	compileShader("endless.frag");
+	link();
+
+	return true;
+}
+
+void EndlessTunnel::shutdown()
+{
+}
+
+void EndlessTunnel::update(float deltaTime)
+{
+}
+
+void EndlessTunnel::draw()
+{
+
 }
 
 void EndlessTunnel::compileShader(const char * fileName)
@@ -157,42 +213,6 @@ void EndlessTunnel::compileShader(const char * source, GLSLShaderType type, cons
 	}
 }
 
-bool EndlessTunnel::startup()
-{
-	// Setup Time Manager singleton
-	TimeManager::create();
-
-	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f
-	};
-
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	compileShader("endless.vert");
-
-	return true;
-}
-
-void EndlessTunnel::shutdown()
-{
-}
-
-void EndlessTunnel::update(float deltaTime)
-{
-}
-
-void EndlessTunnel::draw()
-{
-
-}
-
 std::string EndlessTunnel::getExtension(const char * name)
 {
 	std::string nameStr(name);
@@ -215,4 +235,32 @@ bool EndlessTunnel::fileExists(const std::string & a_fileName)
 		return true;
 	}
 	return false;
+}
+
+void EndlessTunnel::link()
+{
+	glLinkProgram(handle);
+
+	int status = 0;
+	glGetProgramiv(handle, GL_LINK_STATUS, &status);
+
+	if (status == GL_FALSE)
+	{
+		int length = 0;
+		std::string logString;
+
+		glGetProgramiv(handle, GL_INFO_LOG_LENGTH, &length);
+
+		if (length > 0)
+		{
+			char* c_log = new char[length];
+			int written = 0;
+			glGetProgramInfoLog(handle, length, &written, c_log);
+			logString = c_log;
+			delete[] c_log;
+		}
+		std::cout << "Program link failed:" << std::endl << logString << std::endl;
+		return;
+	}
+	
 }
