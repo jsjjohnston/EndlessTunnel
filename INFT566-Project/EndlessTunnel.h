@@ -40,6 +40,7 @@ public:
 	void updateCheckerBoardUniform(float deltaTime);
 	void updateModifierUniform(float deltaTime);
 	void updateScrollSpeedUniform(float deltaTime);
+	void updateRotateSpeedUniform(float deltaTime);
 
 
 	virtual bool startup();
@@ -50,7 +51,7 @@ public:
 private:
 	unsigned int VBO, VAO, EBO;
 	
-	float modifier, checkerBoardSize, scrollSpeed;
+	float modifier, checkerBoardSize, scrollSpeed, rotateSpeed;
 
 	int handle;
 	std::string getExtension(const char* name);

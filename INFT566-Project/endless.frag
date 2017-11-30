@@ -9,6 +9,7 @@ uniform float modifier;
 
 uniform float checkboxSize;
 uniform float scrollSpeed;
+uniform float rotateSpeed;
 
 vec3 checkerBoard( vec2 uv, vec2 pp )
 {
@@ -19,7 +20,7 @@ vec3 checkerBoard( vec2 uv, vec2 pp )
     return c;
 }
 
-vec3 tunnel( vec2 p, float rotateSpeed )
+vec3 tunnel( vec2 p)
 {    
     float a = 2.0 * atan( p.x, p.y  );
     float po = 2.0;
@@ -41,7 +42,7 @@ void main()
 
     vec2 p = uv + vec2( -0.50+cos(timeSpeedX)*0.2, -0.5-sin(timeSpeedY)*0.3 );
 
-    vec3 finalColor = tunnel( p , 0.0);
+    vec3 finalColor = tunnel(p);
 
     FragColor = vec4( finalColor, 1.0 );
 } 
