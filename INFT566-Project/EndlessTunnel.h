@@ -1,13 +1,19 @@
 #pragma once
 #include "Application.h"
 #include "GLM\glm.hpp"
+#include "GLM\ext.hpp"
 #include "GLM\fwd.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "AIE\Gizmos.h"
 //#include "Model.h"
 //#include "Glslprogram.h"
 //#include "Camera.h"
+
+using glm::vec3;
+using glm::vec4;
+using glm::mat4;
 
 enum GLSLShaderType {
 	VERTEX = GL_VERTEX_SHADER,
@@ -49,6 +55,10 @@ public:
 	virtual void shutdown();
 	virtual void update(float deltaTime);
 	virtual void draw();
+
+protected:
+	glm::mat4	m_viewMatrix;
+	glm::mat4	m_projectionMatrix;
 
 private:
 	unsigned int VBO, VAO, EBO;

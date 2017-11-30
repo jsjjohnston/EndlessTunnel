@@ -99,11 +99,20 @@ bool EndlessTunnel::startup()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
+
+	// initialise gizmo primitive counts
+	Gizmos::create(10000, 10000, 10000, 10000);
+
+	// create simple camera transforms
+	m_viewMatrix = glm::lookAt(vec3(10), vec3(0), vec3(0, 1, 0));
+	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,	getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.f);
+
 	return true;
 }
 
 void EndlessTunnel::shutdown()
 {
+	Gizmos::destroy();
 }
 
 void EndlessTunnel::update(float deltaTime)
@@ -123,13 +132,29 @@ void EndlessTunnel::update(float deltaTime)
 	updateGeometryUniform(deltaTime);
 
 	updateHorizonUniform(deltaTime);
+
+	Gizmos::clear();
+
+	Gizmos::addSphere(vec3(5, 0, 5), 1, 8, 8, vec4(1, 0, 0, 0.75f));
+
+	Gizmos::addSphere(vec3(5, 5, 5), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f));
+	// ADD in transform
 }
 
 void EndlessTunnel::draw()
 {
+	// wipe the screen to the background colour
+	clearScreen();
+	
+	// update perspective in case window resized
+	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,	getWindowWidth() / (float)getWindowHeight(),0.1f, 1000.f);
+	
+	// Draw Tunnel
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	
+	// draw 3D gizmos
+	Gizmos::draw(m_projectionMatrix * m_viewMatrix);
 }
 
 void EndlessTunnel::compileShader(const char * fileName)
