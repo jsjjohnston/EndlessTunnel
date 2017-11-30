@@ -70,6 +70,8 @@ bool EndlessTunnel::startup()
 	compileShader("endless.vert");
 	compileShader("endless.frag");
 	link();
+	validate();
+	use();
 
 	return true;
 }
@@ -131,6 +133,10 @@ void EndlessTunnel::compileShader(const char * filename, GLSLShaderType type)
 			std::cout << "COMPLIE SHADER ERRROR: Unable to create shader program: " << filename << std::endl;
 			return; //Dont crash
 		}
+		else
+		{
+			std::cout << "Handle Set to: " << handle << std::endl;
+		}
 	}
 
 	std::ifstream inFile(filename, std::ios::in);
@@ -159,6 +165,10 @@ void EndlessTunnel::compileShader(const char * source, GLSLShaderType type, cons
 		{
 			std::cout << "COMPLIE SHADER ERRROR: Unable to create shader program: " << filename << std::endl;
 			return; //Dont crash
+		}
+		else
+		{
+			std::cout << "Handle Set to: " << handle << std::endl;
 		}
 	}
 
@@ -210,6 +220,7 @@ void EndlessTunnel::compileShader(const char * source, GLSLShaderType type, cons
 	else
 	{
 		glAttachShader(handle, shaderHandle);
+		std::cout << "Shader " << filename << " complied"<< std::endl;
 	}
 }
 
@@ -262,5 +273,46 @@ void EndlessTunnel::link()
 		std::cout << "Program link failed:" << std::endl << logString << std::endl;
 		return;
 	}
+	else
+	{
+		std::cout << "Handle: " << handle << " Linked Successfully" << std::endl;
+	}
 	
+}
+
+void EndlessTunnel::validate()
+{
+	int status;
+	glValidateProgram(handle);
+	glGetProgramiv(handle, GL_VALIDATE_STATUS, &status);
+
+	if (GL_FALSE == status)
+	{
+		// Store log and return false
+		int length = 0;
+		std::string logString;
+
+		glGetProgramiv(handle, GL_INFO_LOG_LENGTH, &length);
+
+		if (length = 0)
+		{
+			char* c_log = new char[length];
+			int written = 0;
+			glGetProgramInfoLog(handle, length, &written, c_log);
+			logString = c_log;
+			delete[] c_log;
+		}
+
+		std::cout << "Program Failed to validate" << std::endl;
+	}
+	else
+	{
+		std::cout << "Handle: " << handle << " Validated successfully" << std::endl;
+	}
+}
+
+void EndlessTunnel::use()
+{
+	glUseProgram(handle);
+	std::cout << "Using Handle: " << handle << std::endl;
 }

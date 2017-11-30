@@ -31,6 +31,8 @@ public:
 	void compileShader(const char* source, GLSLShaderType type, const char* filename);
 
 	void link();
+	void validate();
+	void use();
 
 	virtual bool startup();
 	virtual void shutdown();
