@@ -108,11 +108,19 @@ void EndlessTunnel::shutdown()
 
 void EndlessTunnel::update(float deltaTime)
 {
-	// Pass in time as uniform
-	float timeValue = glfwGetTime();
-	float greenValue = sin(timeValue) / 2.0f + 0.5f;
-	int vertexColorLocation = glGetUniformLocation(handle, "ourColor");
-	glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+	// Pass in time as green uniform
+	//float timeValue = glfwGetTime();
+	//float greenValue = sin(timeValue) / 2.0f + 0.5f;
+	//int vertexColorLocation = glGetUniformLocation(handle, "ourColor");
+	//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+	// Pass in Time
+	int fragTimeLocation = glGetUniformLocation(handle, "time");
+	glUniform1f(fragTimeLocation, glfwGetTime());
+
+	// Pass in resolution
+	int fragResolutionLocation = glGetUniformLocation(handle, "resolution");
+	glUniform2f(fragResolutionLocation, getWindowWidth(), getWindowHeight());
 }
 
 void EndlessTunnel::draw()
