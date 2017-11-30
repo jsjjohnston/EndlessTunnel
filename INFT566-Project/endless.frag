@@ -11,6 +11,7 @@ uniform float checkboxSize;
 uniform float scrollSpeed;
 uniform float rotateSpeed;
 uniform float geometry;
+uniform float horizon;
 
 vec3 checkerBoard( vec2 uv, vec2 pp )
 {
@@ -23,11 +24,11 @@ vec3 checkerBoard( vec2 uv, vec2 pp )
 
 vec3 tunnel( vec2 p)
 {    
-    float a = 2.0 * atan( p.x, p.y  );
+    float a = 2.0 * atan(p.x, p.y);
     float po = geometry;
     float px = pow( p.x*p.x, po );
     float py = pow( p.y*p.y, po );
-    float r = pow( px + py, 1.0/(2.0*po) );    
+    float r = pow( px + py, horizon/(2.0*po) );    
     vec2 uvp = vec2( 1.0/r + (time*scrollSpeed), a + (time*rotateSpeed));	
     vec3 finalColor = checkerBoard( uvp, p ).xyz;
     finalColor *= r;

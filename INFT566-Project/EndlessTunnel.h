@@ -42,6 +42,7 @@ public:
 	void updateScrollSpeedUniform(float deltaTime);
 	void updateRotateSpeedUniform(float deltaTime);
 	void updateGeometryUniform(float deltaTime);
+	void updateHorizonUniform(float deltaTime);
 
 
 	virtual bool startup();
@@ -52,7 +53,7 @@ public:
 private:
 	unsigned int VBO, VAO, EBO;
 	
-	float modifier, checkerBoardSize, scrollSpeed, rotateSpeed, geometry;
+	float modifier, checkerBoardSize, scrollSpeed, rotateSpeed, geometry, horizon;
 
 	int handle;
 	std::string getExtension(const char* name);

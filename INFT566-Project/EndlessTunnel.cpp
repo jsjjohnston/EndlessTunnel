@@ -21,7 +21,7 @@ struct shader_file_extension extensions[] =
 	{ ".cs", GLSLShaderType::COMPUTE }
 };
 
-EndlessTunnel::EndlessTunnel(): handle(0), modifier(2.0f), checkerBoardSize(4.6), scrollSpeed(1.0), rotateSpeed(0.0), geometry(2.0)
+EndlessTunnel::EndlessTunnel(): handle(0), modifier(2.0f), checkerBoardSize(4.6), scrollSpeed(1.0), rotateSpeed(0.0), geometry(2.0), horizon(1.0)
 {
 
 }
@@ -121,6 +121,8 @@ void EndlessTunnel::update(float deltaTime)
 	updateRotateSpeedUniform(deltaTime);
 
 	updateGeometryUniform(deltaTime);
+
+	updateHorizonUniform(deltaTime);
 }
 
 void EndlessTunnel::draw()
@@ -473,4 +475,25 @@ void EndlessTunnel::updateGeometryUniform(float deltaTime)
 	// Pass in rotateSpeed
 	int fragGeometryLocation = glGetUniformLocation(handle, "geometry");
 	glUniform1f(fragGeometryLocation, geometry);
+}
+
+void EndlessTunnel::updateHorizonUniform(float deltaTime)
+{
+	// horizon
+	if (glfwGetKey(m_window, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		horizon += 1.0f * deltaTime;
+		std::cout << "Horizon Value: " << horizon << std::endl;
+	}
+
+	// horizon
+	if (glfwGetKey(m_window, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		horizon -= 1.0f * deltaTime;
+		std::cout << "Geometry Value: " << horizon << std::endl;
+	}
+
+	// Pass in horizon
+	int fragHorizonLocation = glGetUniformLocation(handle, "horizon");
+	glUniform1f(fragHorizonLocation, horizon);
 }
