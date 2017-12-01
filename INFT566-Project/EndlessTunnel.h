@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "AIE\Gizmos.h"
+#include "Gizmos.h"
 //#include "Model.h"
 //#include "Glslprogram.h"
 //#include "Camera.h"

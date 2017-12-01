@@ -3,6 +3,8 @@ using std::ifstream;
 using std::ios;
 #include <sstream>
 
+using aie::Gizmos;
+
 struct shader_file_extension {
 	const char *ext;
 	GLSLShaderType type;
@@ -135,9 +137,14 @@ void EndlessTunnel::update(float deltaTime)
 
 	Gizmos::clear();
 
+	Gizmos::addTransform(mat4(1));
+
+	mat4 t(1);
+	t[3] = vec4(0, modifier, 0, 1);
+
 	Gizmos::addSphere(vec3(5, 0, 5), 1, 8, 8, vec4(1, 0, 0, 0.75f));
 
-	Gizmos::addSphere(vec3(5, 5, 5), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f));
+	Gizmos::addSphere(vec3(5, 5, 5), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f), &t);
 	// ADD in transform
 }
 
