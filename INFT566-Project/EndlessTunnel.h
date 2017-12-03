@@ -50,6 +50,11 @@ public:
 	void updateGeometryUniform(float deltaTime);
 	void updateHorizonUniform(float deltaTime);
 
+	// Debug
+	void updateXYZ(float deltaTime);
+
+	float x, y, z;
+
 
 	virtual bool startup();
 	virtual void shutdown();

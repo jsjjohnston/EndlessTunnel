@@ -23,9 +23,12 @@ struct shader_file_extension extensions[] =
 	{ ".cs", GLSLShaderType::COMPUTE }
 };
 
-EndlessTunnel::EndlessTunnel(): handle(0), modifier(-300.0f), checkerBoardSize(4.6), scrollSpeed(1.0), rotateSpeed(0.0), geometry(2.0), horizon(1.0)
+EndlessTunnel::EndlessTunnel(): handle(0), modifier(0), checkerBoardSize(4.6), scrollSpeed(1.0), rotateSpeed(0.0), geometry(2.0), horizon(1.0)
 {
-
+	// Debug
+	x = 0;
+	y = 0;
+	z = 0;
 }
 
 
@@ -135,19 +138,28 @@ void EndlessTunnel::update(float deltaTime)
 
 	updateHorizonUniform(deltaTime);
 
+	// Debug
+	updateXYZ(deltaTime);
+
 	Gizmos::clear();
 
 	// ADD in transform
 	Gizmos::addTransform(mat4(1));
 
-	static float x = 0, y = 0, z = 0;
+	mat4 model(1);
+	//model[3] = { 0, 0, 0, 1.0f };
+	model[3] = { x, y, z, 1.0f };
 
-	mat4 t(1);
-	t[3] = vec4(x, y, z, 1);
+	mat4 rX = glm::rotate(1.5f, vec3(1, 0, 0));
+	mat4 rY = glm::rotate(0.0f, vec3(0, 1, 0));
+	mat4 rZ = glm::rotate(1.5f, vec3(0, 0, 1));
+	
+	model *= rX * rY * rZ;
 
-	Gizmos::addSphere(vec3(0, 0, 0), 1, 8, 8, vec4(1, 0, 0, 0.75f));
+	Gizmos::addRing(vec3(0, 0, 0), 1, 1.5f, 8, vec4(0, 1, 0, 1), &model);
+	//Gizmos::addSphere(vec3(0, 0, 0), 1, 8, 8, vec4(1, 0, 0, 0.75f));
 
-	Gizmos::addSphere(vec3(0, 0, 0), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f),&t);
+	//Gizmos::addSphere(vec3(0, 0, 0), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f),&t);
 
 	m_viewMatrix = glm::lookAt(vec3(30, 1, 1),	vec3(0), vec3(0, 1, 0));
 }
@@ -532,4 +544,51 @@ void EndlessTunnel::updateHorizonUniform(float deltaTime)
 	// Pass in horizon
 	int fragHorizonLocation = glGetUniformLocation(handle, "horizon");
 	glUniform1f(fragHorizonLocation, horizon);
+}
+
+void EndlessTunnel::updateXYZ(float deltaTime)
+{
+	// X
+	if (glfwGetKey(m_window, GLFW_KEY_X) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		x += 1.0f * deltaTime;
+		std::cout << "X Value: " << x << std::endl;
+	}
+
+	// horizon
+	if (glfwGetKey(m_window, GLFW_KEY_X) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		x -= 1.0f * deltaTime;
+		std::cout << "X Value: " << x << std::endl;
+	}
+
+
+	// Y
+	if (glfwGetKey(m_window, GLFW_KEY_Y) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		y += 1.0f * deltaTime;
+		std::cout << "Y Value: " << y<< std::endl;
+	}
+
+	// horizon
+	if (glfwGetKey(m_window, GLFW_KEY_Y) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		y -= 1.0f * deltaTime;
+		std::cout << "Y Value: " << y << std::endl;
+	}
+
+	// Z
+	if (glfwGetKey(m_window, GLFW_KEY_Z) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		z += 1.0f * deltaTime;
+		std::cout << "Z Value: " << z << std::endl;
+	}
+
+	// horizon
+	if (glfwGetKey(m_window, GLFW_KEY_Z) == GLFW_PRESS && glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		z -= 1.0f * deltaTime;
+		std::cout << "Z Value: " << z << std::endl;
+	}
+
 }
