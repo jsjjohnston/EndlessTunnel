@@ -6,6 +6,7 @@ EndlessTunnel::EndlessTunnel()
 {
 	// initialize
 	ring = new Ring();
+	player = new Player();
 }
 
 
@@ -59,7 +60,8 @@ void EndlessTunnel::draw()
 	
 	tunnel->draw();
 	ring->draw();
-	
+	player->draw();
+
 	// draw 3D gizmos
 	Gizmos::draw(m_projectionMatrix * m_viewMatrix);
 }

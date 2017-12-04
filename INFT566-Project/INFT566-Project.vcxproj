@@ -215,6 +215,7 @@
     <ClCompile Include="GameOBJ.cpp" />
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ring.cpp" />
     <ClCompile Include="testCase.cpp" />
     <ClCompile Include="TimeManager.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="EndlessTunnel.h" />
     <ClInclude Include="GameOBJ.h" />
     <ClInclude Include="Gizmos.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Primitives\OBJVertex.h" />
     <ClInclude Include="Primitives\OpenGLInfo.h" />
     <ClInclude Include="Primitives\Vertex.h" />

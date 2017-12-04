@@ -12,6 +12,7 @@ using glm::mat4;
 
 #include "Tunnel.h"
 #include "Ring.h"
+#include "Player.h"
 
 class EndlessTunnel :
 	public Application
@@ -33,5 +34,6 @@ private:
 
 	Tunnel* tunnel;
 	Ring* ring;
+	Player* player;
 };
 
