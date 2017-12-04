@@ -218,6 +218,7 @@
     <ClCompile Include="testCase.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
+    <ClCompile Include="Tunnel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Catch\catch.hpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="tiny_obj_loader.h" />
+    <ClInclude Include="Tunnel.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="INFT566-Project.rc" />

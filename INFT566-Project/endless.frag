@@ -4,9 +4,6 @@ out vec4 FragColor;
 uniform float time;
 uniform vec2 resolution;
 
-// Temp value used to understand game
-uniform float modifier;
-
 uniform float checkboxSize;
 uniform float scrollSpeed;
 uniform float rotateSpeed;
