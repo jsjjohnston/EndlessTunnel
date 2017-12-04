@@ -43,3 +43,9 @@
 #define HORIZON_INITIAL 1.0f
 #define HORIZON_MAX 10.0f
 #define HORIZON_MIN 10.0f
+
+/*
+	Random
+*/
+
+#define RAND_MAX 50.0f;

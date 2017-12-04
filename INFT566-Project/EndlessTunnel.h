@@ -11,7 +11,7 @@ using glm::vec4;
 using glm::mat4;
 
 #include "Tunnel.h"
-
+#include "Ring.h"
 
 class EndlessTunnel :
 	public Application
@@ -19,12 +19,6 @@ class EndlessTunnel :
 public:
 	EndlessTunnel();
 	~EndlessTunnel();
-
-	// Debug
-	void updateXYZ(float deltaTime);
-
-	float x, y, z;
-
 
 	virtual bool startup();
 	virtual void shutdown();
@@ -38,5 +32,6 @@ protected:
 private:
 
 	Tunnel* tunnel;
+	Ring* ring;
 };
 

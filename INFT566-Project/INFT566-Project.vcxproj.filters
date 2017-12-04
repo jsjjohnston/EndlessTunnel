@@ -45,6 +45,9 @@
     <ClCompile Include="Tunnel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\GLM\gl_core_4_4.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tunnel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
