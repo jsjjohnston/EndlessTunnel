@@ -20,8 +20,10 @@ bool EndlessTunnel::startup()
 {
 	// initialize
 	tunnel = new Tunnel(getWindowWidth(), getWindowHeight());
-
 	tunnel->startup();
+
+	player->m_window = m_window;
+
 	// initialise gizmo primitive counts
 	Gizmos::create(10000, 10000, 10000, 10000);
 
@@ -47,7 +49,7 @@ void EndlessTunnel::update(float deltaTime)
 
 	ring->update(deltaTime);
 
-	//m_viewMatrix = glm::lookAt(vec3(30, 1, 1),	vec3(0), vec3(0, 1, 0));
+	player->update(deltaTime);
 }
 
 void EndlessTunnel::draw()
