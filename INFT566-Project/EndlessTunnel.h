@@ -31,7 +31,7 @@ protected:
 	glm::mat4	m_projectionMatrix;
 
 private:
-
+	float speed;
 	Tunnel* tunnel;
 	Ring* ring;
 	Player* player;

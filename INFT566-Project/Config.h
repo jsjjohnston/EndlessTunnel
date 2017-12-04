@@ -7,7 +7,7 @@
 	Checker Board
 */
 
-#define CHECKERBOARD_INITIAL 4.5f
+#define CHECKERBOARD_INITIAL 4.6f
 #define CHECKERBOARD_MAX 10.0f
 #define CHECKERBOARD_MIN -10.0f
 
@@ -32,9 +32,9 @@
 	The Shape of the tunnel
 */
 
-#define GEOMETRY_INITIAL 2.0f
-#define GEOMETRY_MAX 10.0f
-#define GEOMETRY_MIN -10.0f
+#define GEOMETRY_INITIAL 1.0f
+#define GEOMETRY_MAX 3.0f
+#define GEOMETRY_MIN -1.0f
 
 /*
 	Horizon
@@ -45,7 +45,9 @@
 #define HORIZON_MIN 10.0f
 
 /*
-	Random
+	Demo Mode
 */
 
-#define RAND_MAX 50.0f;
+#define DEMOMODE true
+#define TRANSITION_FREQUENCY 10.0f
+#define TRANSITION_SPEED 0.5f

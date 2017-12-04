@@ -23,8 +23,9 @@ struct shader_file_extension extensions[] =
 	{ ".cs", GLSLShaderType::COMPUTE }
 };
 
-Tunnel::Tunnel(float a_width, float a_height): checkerBoardSize(CHECKERBOARD_INITIAL), scrollSpeed(SCROLLSPEED_INITIAL),rotateSpeed(ROTATESPEED_INITIAL),geometry(GEOMETRY_INITIAL), horizon(HORIZON_INITIAL), windowWidth(a_width), windowHeight(a_height)
+Tunnel::Tunnel(float a_width, float a_height): checkerBoardSize(CHECKERBOARD_INITIAL), scrollSpeed(SCROLLSPEED_INITIAL),rotateSpeed(ROTATESPEED_INITIAL),geometry(GEOMETRY_INITIAL), horizon(HORIZON_INITIAL), windowWidth(a_width), windowHeight(a_height), demoMode(DEMOMODE)
 {
+	transition = Transitions::SHRINK_GEOMETRY;
 }
 
 
@@ -54,6 +55,8 @@ bool Tunnel::startup()
 {
 	// Setup Time Manager singleton
 	TimeManager::create();
+	if (demoMode)
+		timer = glfwGetTime() + TRANSITION_FREQUENCY;
 
 	compileShader("endless.vert");
 	compileShader("endless.frag");
@@ -100,6 +103,41 @@ void Tunnel::shutdown()
 
 void Tunnel::update(float deltaTime)
 {
+	if (demoMode && timer <= glfwGetTime())
+	{
+		switch (transition)
+		{
+		case SHRINK_GEOMETRY:
+			std::cout << "Shrink Geometry" << std::endl;
+			shrinkGeometry(deltaTime);
+			break;
+		case RESET_GEOMETRY:
+			std::cout << "Reset Geometry" << std::endl;
+			resetGeometry(deltaTime);
+			break;
+		case EXPAND_GEOMETRY:
+			std::cout << "Expand Geometry" << std::endl;
+			expandGeometry(deltaTime);
+			break;
+		case EXPAND_CHECKERBOARDSIZE:
+			std::cout << "Expand Checkerboard size" << std::endl;
+			expandCheckerBoardSize(deltaTime);
+			break;
+		case SHRINK_CHECKERBOARDSIZE:
+			std::cout << "Shrink Checkerboard size" << std::endl;
+			expandCheckerBoardSize(deltaTime);
+			break;
+		case RESET_CHECKERBOARDSIZE:
+			std::cout << "Reset Checkerboard size" << std::endl;
+			resetCheckerBoardSize(deltaTime);
+			break;
+		case TRANSITION_COUNT:
+			break;
+		default:
+			break;
+		}
+	}
+
 	updateTimeUniform();
 	updateResolutionUniform();
 	updateCheckerBoardUniform();
@@ -107,6 +145,7 @@ void Tunnel::update(float deltaTime)
 	updateRotateSpeedUniform();
 	updateGeometryUniform();
 	updateHorizonUniform();
+
 }
 
 void Tunnel::draw()
@@ -390,4 +429,92 @@ bool Tunnel::fileExists(const std::string & a_fileName)
 		return true;
 	}
 	return false;
+}
+
+void Tunnel::shrinkGeometry(float deltaTime)
+{
+	geometry -= TRANSITION_SPEED * deltaTime;
+	if (geometry <= GEOMETRY_MIN)
+	{
+		timer = glfwGetTime() + TRANSITION_FREQUENCY;
+		transition = Transitions::RESET_GEOMETRY;
+	}
+}
+
+void Tunnel::resetGeometry(float deltaTime)
+{
+	if (geometry < GEOMETRY_INITIAL)
+	{
+		geometry += TRANSITION_SPEED * deltaTime;
+		if (geometry >= GEOMETRY_INITIAL)
+		{
+			timer = glfwGetTime() + TRANSITION_FREQUENCY;
+			transition = Transitions::EXPAND_GEOMETRY;
+			return;
+		}
+	}
+	else if (geometry > GEOMETRY_INITIAL)
+	{
+		geometry -= TRANSITION_SPEED * deltaTime;
+		if (geometry <= GEOMETRY_INITIAL)
+		{
+			timer = glfwGetTime() + TRANSITION_FREQUENCY;
+			transition = Transitions::SHRINK_CHECKERBOARDSIZE;
+			return;
+		}
+	}
+}
+
+void Tunnel::expandGeometry(float deltaTime)
+{
+	geometry += TRANSITION_SPEED * deltaTime;
+	if (geometry >= GEOMETRY_MAX)
+	{
+		timer = glfwGetTime() + TRANSITION_FREQUENCY;
+		transition = Transitions::RESET_GEOMETRY;
+	}
+}
+
+void Tunnel::shrinkCheckerBoardSize(float deltaTime)
+{
+	checkerBoardSize -= TRANSITION_SPEED * deltaTime;
+	if (checkerBoardSize <= CHECKERBOARD_MIN)
+	{
+		timer = glfwGetTime() + TRANSITION_FREQUENCY;
+		transition = Transitions::RESET_CHECKERBOARDSIZE;
+	}
+}
+
+void Tunnel::resetCheckerBoardSize(float deltaTime)
+{
+	if (checkerBoardSize < CHECKERBOARD_INITIAL)
+	{
+		checkerBoardSize += TRANSITION_SPEED * deltaTime;
+		if (checkerBoardSize >= CHECKERBOARD_INITIAL)
+		{
+			timer = glfwGetTime() + TRANSITION_FREQUENCY;
+			transition = Transitions::SHRINK_GEOMETRY;
+			return;
+		}
+	}
+	else if (checkerBoardSize > CHECKERBOARD_INITIAL)
+	{
+		checkerBoardSize -= TRANSITION_SPEED * deltaTime;
+		if (checkerBoardSize <= CHECKERBOARD_INITIAL)
+		{
+			timer = glfwGetTime() + TRANSITION_FREQUENCY;
+			transition = Transitions::EXPAND_CHECKERBOARDSIZE;
+			return;
+		}
+	}
+}
+
+void Tunnel::expandCheckerBoardSize(float deltaTime)
+{
+	checkerBoardSize += TRANSITION_SPEED * deltaTime;
+	if (checkerBoardSize >= CHECKERBOARD_MAX)
+	{
+		timer = glfwGetTime() + TRANSITION_FREQUENCY;
+		transition = Transitions::RESET_CHECKERBOARDSIZE;
+	}
 }

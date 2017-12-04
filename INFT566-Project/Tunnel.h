@@ -19,6 +19,17 @@ using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
+enum Transitions
+{
+	SHRINK_GEOMETRY,
+	RESET_GEOMETRY,
+	EXPAND_GEOMETRY,
+	SHRINK_CHECKERBOARDSIZE,
+	RESET_CHECKERBOARDSIZE,
+	EXPAND_CHECKERBOARDSIZE,
+	TRANSITION_COUNT
+};
+
 enum GLSLShaderType {
 	VERTEX = GL_VERTEX_SHADER,
 	FRAGMENT = GL_FRAGMENT_SHADER,
@@ -121,5 +132,18 @@ private:
 	// resolution
 	float windowWidth;
 	float windowHeight;
+
+	// Demo Mode
+	bool demoMode;
+	float timer;
+	Transitions transition;
+
+	void shrinkGeometry(float deltaTime);
+	void resetGeometry(float deltaTime);
+	void expandGeometry(float deltaTime);
+
+	void shrinkCheckerBoardSize(float deltaTime);
+	void resetCheckerBoardSize(float deltaTime);
+	void expandCheckerBoardSize(float deltaTime);
 };
 

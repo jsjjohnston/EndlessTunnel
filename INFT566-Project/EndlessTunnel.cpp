@@ -2,7 +2,7 @@
 
 using aie::Gizmos;
 
-EndlessTunnel::EndlessTunnel()
+EndlessTunnel::EndlessTunnel(): speed(SCROLLSPEED_INITIAL)
 {
 	// initialize
 	ring = new Ring();
@@ -46,6 +46,23 @@ void EndlessTunnel::update(float deltaTime)
 	Gizmos::clear();
 		
 	tunnel->update(deltaTime);
+
+	if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		speed += TRANSITION_SPEED * deltaTime;
+		if (speed >= SCROLLSPEED_MAX)
+			speed = SCROLLSPEED_MAX;
+
+		tunnel->setScrollSpeed(speed);
+		ring->setSpeed(speed);
+	}
+	else
+	{
+		speed = SCROLLSPEED_INITIAL;
+
+		tunnel->setScrollSpeed(speed);
+		ring->setSpeed(speed);
+	}
 
 	ring->update(deltaTime);
 
