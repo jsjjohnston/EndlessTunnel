@@ -25,7 +25,8 @@ struct shader_file_extension extensions[] =
 
 Tunnel::Tunnel(float a_width, float a_height): checkerBoardSize(CHECKERBOARD_INITIAL), scrollSpeed(SCROLLSPEED_INITIAL),rotateSpeed(ROTATESPEED_INITIAL),geometry(GEOMETRY_INITIAL), horizon(HORIZON_INITIAL), windowWidth(a_width), windowHeight(a_height), demoMode(DEMOMODE)
 {
-	transition = Transitions::SHRINK_GEOMETRY;
+	//transition = Transitions::SHRINK_GEOMETRY;
+	transition = Transitions::SHRINK_CHECKERBOARDSIZE;
 }
 
 
@@ -108,27 +109,21 @@ void Tunnel::update(float deltaTime)
 		switch (transition)
 		{
 		case SHRINK_GEOMETRY:
-			std::cout << "Shrink Geometry" << std::endl;
 			shrinkGeometry(deltaTime);
 			break;
 		case RESET_GEOMETRY:
-			std::cout << "Reset Geometry" << std::endl;
 			resetGeometry(deltaTime);
 			break;
 		case EXPAND_GEOMETRY:
-			std::cout << "Expand Geometry" << std::endl;
 			expandGeometry(deltaTime);
 			break;
 		case EXPAND_CHECKERBOARDSIZE:
-			std::cout << "Expand Checkerboard size" << std::endl;
 			expandCheckerBoardSize(deltaTime);
 			break;
 		case SHRINK_CHECKERBOARDSIZE:
-			std::cout << "Shrink Checkerboard size" << std::endl;
-			expandCheckerBoardSize(deltaTime);
+			shrinkCheckerBoardSize(deltaTime);
 			break;
 		case RESET_CHECKERBOARDSIZE:
-			std::cout << "Reset Checkerboard size" << std::endl;
 			resetCheckerBoardSize(deltaTime);
 			break;
 		case TRANSITION_COUNT:
@@ -478,6 +473,7 @@ void Tunnel::expandGeometry(float deltaTime)
 void Tunnel::shrinkCheckerBoardSize(float deltaTime)
 {
 	checkerBoardSize -= TRANSITION_SPEED * deltaTime;
+	std::cout << checkerBoardSize << std::endl;
 	if (checkerBoardSize <= CHECKERBOARD_MIN)
 	{
 		timer = glfwGetTime() + TRANSITION_FREQUENCY;

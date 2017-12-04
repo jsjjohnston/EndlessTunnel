@@ -48,8 +48,8 @@ void Ring::spawn()
 	setColour();
 
 	x = -500;
-	y = RandomFloat(-10.0f,10.0f);
-	z = RandomFloat(-10.0f,10.0f);
+	y = RandomFloat(-3.0f,4.0f);
+	z = RandomFloat(-3.0f,4.0f);
 }
 
 

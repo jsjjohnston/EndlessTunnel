@@ -9,7 +9,7 @@
 
 #define CHECKERBOARD_INITIAL 4.6f
 #define CHECKERBOARD_MAX 10.0f
-#define CHECKERBOARD_MIN -10.0f
+#define CHECKERBOARD_MIN 0.5f
 
 /*
 	Scroll Speed
