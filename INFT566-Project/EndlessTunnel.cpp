@@ -5,7 +5,7 @@ using aie::Gizmos;
 EndlessTunnel::EndlessTunnel()
 {
 	// Debug
-	x = 0;
+	x = -200;
 	y = 0;
 	z = 0;
 }
@@ -41,7 +41,6 @@ void EndlessTunnel::update(float deltaTime)
 {
 	// Debug
 	updateXYZ(deltaTime);
-	std::cout << glfwGetTime() << std::endl;
 
 	Gizmos::clear();
 	
@@ -49,6 +48,9 @@ void EndlessTunnel::update(float deltaTime)
 
 	// ADD in transform
 	Gizmos::addTransform(mat4(1));
+
+	x += tunnel->getScrollSpeed() / 2;
+	if (x == 100) x = -200;
 
 	mat4 model(1);
 	//model[3] = { 0, 0, 0, 1.0f };
@@ -60,7 +62,7 @@ void EndlessTunnel::update(float deltaTime)
 	
 	model *= rX * rY * rZ;
 
-	Gizmos::addRing(vec3(0, 0, 0), 1, 1.5f, 8, vec4(0, 1, 0, 1), &model);
+	Gizmos::addRing(vec3(0, 0, 0), 1, 1.5f, 8, vec4(1, 1, 0, 1), &model);
 	//Gizmos::addSphere(vec3(0, 0, 0), 1, 8, 8, vec4(1, 0, 0, 0.75f));
 
 	//Gizmos::addSphere(vec3(0, 0, 0), 0.10, 8, 8, vec4(0, 0.5, 0.5, 1.0f),&t);

@@ -13,6 +13,8 @@
 
 #include "Gizmos.h"
 
+#include "Config.h"
+
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
@@ -28,6 +30,7 @@ enum GLSLShaderType {
 class Tunnel
 {
 public:
+	// Constructor Destructor
 	Tunnel(float a_width, float a_height);
 	~Tunnel();
 
@@ -48,15 +51,39 @@ public:
 
 	// get & set uniform parameters
 	float getCheckerBoardSize() { return checkerBoardSize; };
-	void setCheckerBoardSize(float a_checkerBoardSize) { checkerBoardSize = a_checkerBoardSize; };
+
+	void setCheckerBoardSize(float a_checkerBoardSize) { 
+		if(a_checkerBoardSize <= CHECKERBOARD_MAX && a_checkerBoardSize >= CHECKERBOARD_MIN) 
+			checkerBoardSize = a_checkerBoardSize; 
+	};
+
 	float getScrollSpeed() { return scrollSpeed; };
-	void setScrollSpeed(float a_scrollSpeed) { scrollSpeed = a_scrollSpeed; };
+	
+	void setScrollSpeed(float a_scrollSpeed) { 
+		if (a_scrollSpeed <= SCROLLSPEED_MAX && a_scrollSpeed >= SCROLLSPEED_MIN)
+			scrollSpeed = a_scrollSpeed; 
+	};
+	
 	float getRotateSpeed() { return rotateSpeed; };
-	void setRotateSpeed(float a_rotateSpeed) { rotateSpeed = a_rotateSpeed; };
+	
+	void setRotateSpeed(float a_rotateSpeed) {
+		if (a_rotateSpeed <= ROTATESPEED_MAX && a_rotateSpeed >= ROTATESPEED_MIN)
+			rotateSpeed = a_rotateSpeed; 
+	};
+
 	float getGeomtry() { return geometry; };
-	void setGeomtry(float a_geomtry) { geometry = a_geomtry; };
+
+	void setGeomtry(float a_geomtry) { 
+		if (a_geomtry <= GEOMETRY_MAX && a_geomtry >= GEOMETRY_MIN) 
+			geometry = a_geomtry; 
+	};
+	
 	float getHorizon() { return geometry; };
-	void setHorizon(float a_horizon) { horizon = a_horizon; };
+
+	void setHorizon(float a_horizon) { 
+		if (a_horizon <= HORIZON_MAX && a_horizon >= HORIZON_MIN)
+			horizon = a_horizon; 
+	};
 
 	// get & set resolution
 	float getWindowWidth() { return windowWidth; };

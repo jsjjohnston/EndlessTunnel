@@ -23,7 +23,7 @@ struct shader_file_extension extensions[] =
 	{ ".cs", GLSLShaderType::COMPUTE }
 };
 
-Tunnel::Tunnel(float a_width, float a_height): checkerBoardSize(4.6), scrollSpeed(1.0),rotateSpeed(0),geometry(2.0), horizon(1.0), windowWidth(a_width), windowHeight(a_height)
+Tunnel::Tunnel(float a_width, float a_height): checkerBoardSize(CHECKERBOARD_INITIAL), scrollSpeed(SCROLLSPEED_INITIAL),rotateSpeed(ROTATESPEED_INITIAL),geometry(GEOMETRY_INITIAL), horizon(HORIZON_INITIAL), windowWidth(a_width), windowHeight(a_height)
 {
 }
 
@@ -120,7 +120,6 @@ void Tunnel::updateTimeUniform()
 {
 	// Pass in Time 
 	int fragTimeLocation = glGetUniformLocation(handle, "time");
-	std::cout << glfwGetTime() << std::endl;
 	glUniform1f(fragTimeLocation, glfwGetTime());
 }
 

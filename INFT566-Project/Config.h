@@ -4,35 +4,42 @@
 */
 
 /*
-	Set how sensitive the mouse is
-	(Set as a float)
+	Checker Board
 */
-#define MOUSE_SENSITIVITY 1.0f
+
+#define CHECKERBOARD_INITIAL 4.5f
+#define CHECKERBOARD_MAX 10.0f
+#define CHECKERBOARD_MIN -10.0f
 
 /*
-	Set how quickly the mouse Rotates
-	(Set as a float)
+	Scroll Speed
 */
-#define MOUSE_ROTATIONAL_SPEED 0.05f
+
+#define SCROLLSPEED_INITIAL 1.0f
+#define SCROLLSPEED_MAX 10.0f
+#define SCROLLSPEED_MIN -10.0f
 
 /*
-	Set How quickly the Cam moves (W,A,S,D,R(Up),F(Down))
-	(Set as a float)
+	Rotate Speed
 */
-#define MOVEMENT_SPEED 10.0f
+
+#define ROTATESPEED_INITIAL 0.0f
+#define ROTATESPEED_MAX 10.0f
+#define ROTATESPEED_MIN -10.0f
 
 /*
-	Set if the Camera is Inverted
-	(To be used as a Bool)
+	Geometry
+	The Shape of the tunnel
 */
-#define INVERTED_CAMERA true
+
+#define GEOMETRY_INITIAL 2.0f
+#define GEOMETRY_MAX 10.0f
+#define GEOMETRY_MIN -10.0f
 
 /*
-	Model Movement Speed
+	Horizon
 */
-#define DEFAULT_MODEL_MOVMENT 0.5f
 
-/*
-	Model Roatation Speed
-*/
-#define DEFAULT_MODEL_ROTATION 0.005f
+#define HORIZON_INITIAL 1.0f
+#define HORIZON_MAX 10.0f
+#define HORIZON_MIN 10.0f
