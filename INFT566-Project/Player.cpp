@@ -4,6 +4,7 @@ using aie::Gizmos;
 
 Player::Player(): x(0), y(0), z(0), speed(3)
 {
+	colour = vec3(0.75, 0.75, 0.75);
 }
 
 
@@ -50,5 +51,5 @@ void Player::update(float deltaTime)
 
 void Player::draw()
 {
-	Gizmos::addSphere(glm::vec3(0, 0, 0), 2, 8, 8, glm::vec4(0.75, 0.75, 0.75, 0.50), &model);
+	Gizmos::addSphere(glm::vec3(0, 0, 0), 2, 8, 8, glm::vec4(colour.r, colour.b, colour.g, 0.50), &model);
 }

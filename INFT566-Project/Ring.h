@@ -42,6 +42,7 @@ public:
 	float getY(){return y;}
 	float getZ(){return z;}
 
+	vec4 getColour() { return colour; }
 
 protected:
 

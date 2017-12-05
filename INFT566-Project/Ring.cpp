@@ -66,20 +66,7 @@ void Ring::randomType()
 
 void Ring::setColour()
 {
-	switch (type)
-	{
-	case RED:
-		colour = vec4(1, 0, 0, 1);
-		break;
-	case GREEN:
-		colour = vec4(0, 1, 0, 1);
-		break;
-	case BLUE:
-		colour = vec4(0, 0, 1, 1);
-		break;
-	default:
-		break;
-	}
+	colour = vec4(RandomFloat(0,1), RandomFloat(0, 1), RandomFloat(0, 1), 1);
 }
 
 float Ring::RandomFloat(float a, float b)

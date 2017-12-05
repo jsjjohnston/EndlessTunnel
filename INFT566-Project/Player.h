@@ -29,12 +29,15 @@ public:
 	float getY() { return y; }
 	float getZ() { return z; }
 
+	void setColour(vec4 a_colour) { colour = vec3(a_colour.r, a_colour.b, a_colour.g); }
+
 private:
 	float x;
 	float y;
 	float z;
 
 	float speed;
+	glm::vec3 colour;
 
 	glm::mat4 model;
 

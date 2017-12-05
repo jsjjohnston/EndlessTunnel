@@ -3,8 +3,6 @@
 #include "GLM\glm.hpp"
 #include "GLM\ext.hpp"
 #include "GLM\fwd.hpp"
-#include "Font.h"
-#include "Renderer2D.h"
 
 #include "Gizmos.h"
 

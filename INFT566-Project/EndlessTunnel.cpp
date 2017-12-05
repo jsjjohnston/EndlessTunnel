@@ -70,7 +70,7 @@ void EndlessTunnel::update(float deltaTime)
 
 	if (distX <= HIT_DIST && distY <= HIT_DIST && distZ <= HIT_DIST)
 	{
-		std::cout << "\rHIT" << std::endl;
+		player->setColour(ring->getColour());
 	}
 
 	ring->update(deltaTime);

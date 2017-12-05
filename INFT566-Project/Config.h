@@ -56,4 +56,4 @@
 	Collision
 */
 
-#define HIT_DIST 3.0f
+#define HIT_DIST 2.5f
