@@ -60,8 +60,6 @@ void Ring::randomType()
 	std::uniform_int_distribution<> dis(RingType::RED, RingType::BLUE);
 
 	type = (RingType) dis(gen);
-
-	std::cout << "Type Set to " << type << std::endl;
 }
 
 void Ring::setColour()
@@ -76,8 +74,6 @@ float Ring::RandomFloat(float a, float b)
 	std::uniform_real_distribution<> dis(a, b);
 
 	float rand = (float)dis(gen);
-
-	std::cout << "Random: " << rand << std::endl;
 
 	return (float)dis(gen);
 }
