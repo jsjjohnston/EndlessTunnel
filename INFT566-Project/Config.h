@@ -51,3 +51,9 @@
 #define DEMOMODE true
 #define TRANSITION_FREQUENCY 10.0f
 #define TRANSITION_SPEED 0.5f
+
+/*
+	Collision
+*/
+
+#define HIT_DIST 3.0f

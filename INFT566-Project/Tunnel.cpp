@@ -473,7 +473,6 @@ void Tunnel::expandGeometry(float deltaTime)
 void Tunnel::shrinkCheckerBoardSize(float deltaTime)
 {
 	checkerBoardSize -= TRANSITION_SPEED * deltaTime;
-	std::cout << checkerBoardSize << std::endl;
 	if (checkerBoardSize <= CHECKERBOARD_MIN)
 	{
 		timer = glfwGetTime() + TRANSITION_FREQUENCY;

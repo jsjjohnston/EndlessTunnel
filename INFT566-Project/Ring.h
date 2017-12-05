@@ -38,10 +38,16 @@ public:
 
 	void spawn();
 
+	float getX(){return x;}
+	float getY(){return y;}
+	float getZ(){return z;}
+
+
 protected:
 
 private:
 	float speed;
+
 	float x;
 	float y; 
 	float z;

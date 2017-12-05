@@ -24,6 +24,11 @@ public:
 
 	float getSpeed() { return speed; };
 	void setSpeed(float a_speed) { speed = a_speed; };
+
+	float getX() { return x; }
+	float getY() { return y; }
+	float getZ() { return z; }
+
 private:
 	float x;
 	float y;

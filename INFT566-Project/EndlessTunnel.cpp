@@ -64,6 +64,15 @@ void EndlessTunnel::update(float deltaTime)
 		ring->setSpeed(speed);
 	}
 
+	float distX = abs(player->getX() - ring->getX());
+	float distY = abs(player->getY() - ring->getY());
+	float distZ = abs(player->getZ() - ring->getZ());
+
+	if (distX <= HIT_DIST && distY <= HIT_DIST && distZ <= HIT_DIST)
+	{
+		std::cout << "\rHIT" << std::endl;
+	}
+
 	ring->update(deltaTime);
 
 	player->update(deltaTime);
